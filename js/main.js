@@ -1,7 +1,7 @@
 "use strict";
 /*
  * Laboration 5 - Studentkortsgenerator
- * Namn: DITT NAMN
+ * Namn: Moa Karlsson
  */
 
 // Hämta element från DOM
@@ -35,6 +35,7 @@ let history = [];
 function validateForm() {
     // Kontrollera formulärets obligatoriska fält
 
+
     // Visa eventuella felmeddelanden
 
     // Returnera resultatet (true eller false) av valideringen
@@ -56,8 +57,14 @@ function displayErrors() {
  */
 function createStudentCard() {
     // Hämta information från formuläret
+    let fullname = fullnameInput.value;
+    let email = emailInput.value;
+    let phone = phoneInput.value;
 
     // Uppdatera studentkortet
+    previewFullname.innerHTML = fullname;
+    previewEmail.innerHTML = email;
+    previewPhone.innerHTML = phone;
 
     // Lägg till studentkortet i historiken
 
@@ -128,3 +135,8 @@ function deleteHistory() {
 
 // När sidan laddas:
 // - läs in och visa eventuell tidigare historik
+
+form.addEventListener("submit", function (event){
+event.preventDefault();
+    createStudentCard();
+});
