@@ -34,27 +34,54 @@ let history = [];
  */
 function validateForm() {
     // Kontrollera formulärets obligatoriska fält
+    const nameValue = fullnameInput.value.trim();
+    const emailValue = emailInput.value.trim();
+    const phoneValue = phoneInput.value.trim();
+    let validate = true;
 
+    errors = [];
+    errorList.innerHTML = "";
 
-    // Visa eventuella felmeddelanden
+    if (nameValue === "") {
+        errors.push("Ange ditt namn");
+        validate = false;
+    }
+
+    if (emailValue.length === 0) {
+        errors.push("Ange din e-postadress");
+        validate = false;
+    }
+
+    if (!emailValue.includes("@")) {
+        errors.push("Ange en giltig e-postadress");
+        validate = false;
+    }
+
+    if (phoneValue.length === 0) {
+        errors.push("Ange ditt telefon nummer");
+        validate = false;
+    }
+
+    displayErrors();
 
     // Returnera resultatet (true eller false) av valideringen
-    if (errors.length === 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return validate;
 }
 
 
 /**
  * Visar felmeddelanden på sidan.
- */
+*/
 function displayErrors() {
     // Rensa tidigare felmeddelanden
+    if (errors.length > 0) {
+        for (let i = 0; i < errors.length; i++) {
+            const liEl = document.createElement("li");
+            liEl.innerHTML = errors[i];
 
-    // Skriv ut aktuella felmeddelanden till DOM
+            errorList.appendChild(liEl);
+        }
+    }
 }
 
 
@@ -129,7 +156,7 @@ function deleteHistory() {
 // Eventlyssnare
 
 // När formuläret skickas:
-form.addEventListener("submit", function (event){
+form.addEventListener("submit", function (event) {
     event.preventDefault();
     // - validera inmatningen
     let valid = validateForm();
@@ -150,11 +177,13 @@ form.addEventListener("submit", function (event){
 // När sidan laddas:
 // - läs in och visa eventuell tidigare historik
 
-document.addEventListener("DOMContentLoaded", ()=> {
+
+// Ändra typsnitt på studentkortet
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("font").addEventListener("change", changeFont);
 });
 
-function changeFont(){
+function changeFont() {
     const font = document.getElementById("font").value;
     document.querySelector("#preview").style.fontFamily = font;
 }
