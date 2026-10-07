@@ -152,7 +152,7 @@ function renderHistory(student) {
 function writeHistory() {
     let students = JSON.parse(loadHistory());
 
-    if (!students === null) {
+    if (students.length > 0) {
         for (let i = 0; i < students.length; i++) {
             const sectionEl = document.createElement("section");
             const pEl = document.createElement("p");
