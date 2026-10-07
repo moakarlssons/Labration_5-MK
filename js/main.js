@@ -39,6 +39,12 @@ function validateForm() {
     // Visa eventuella felmeddelanden
 
     // Returnera resultatet (true eller false) av valideringen
+    if (errors.length === 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
@@ -123,8 +129,16 @@ function deleteHistory() {
 // Eventlyssnare
 
 // När formuläret skickas:
-// - validera inmatningen
-// - skapa studentkort om valideringen lyckas
+form.addEventListener("submit", function (event){
+    event.preventDefault();
+    // - validera inmatningen
+    let valid = validateForm();
+    // - skapa studentkort om valideringen lyckas
+    if (valid) {
+        createStudentCard();
+    }
+});
+
 
 
 // När användaren klickar på "Rensa"
@@ -136,7 +150,11 @@ function deleteHistory() {
 // När sidan laddas:
 // - läs in och visa eventuell tidigare historik
 
-form.addEventListener("submit", function (event){
-event.preventDefault();
-    createStudentCard();
+document.addEventListener("DOMContentLoaded", ()=> {
+    document.getElementById("font").addEventListener("change", changeFont);
 });
+
+function changeFont(){
+    const font = document.getElementById("font").value;
+    document.querySelector("#preview").style.fontFamily = font;
+}
