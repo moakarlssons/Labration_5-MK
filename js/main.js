@@ -122,7 +122,7 @@ function saveHistory(student) {
         history = [];
     }
 
-    history.push(student);
+    history.unshift(student);
     const studentsJson = JSON.stringify(history);
     localStorage.setItem("students", studentsJson);
 }
@@ -182,6 +182,7 @@ function clearForm() {
     fullnameInput.value = "";
     emailInput.value = "";
     phoneInput.value = "";
+    fontSelect.selectedIndex = 0;
 }
 
 /**
