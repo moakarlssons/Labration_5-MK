@@ -91,6 +91,7 @@ function createStudentCard() {
     let fullname = fullnameInput.value;
     let email = emailInput.value;
     let phone = phoneInput.value;
+    let font = fontSelect.value;
 
     // Uppdatera studentkortet
     previewFullname.innerHTML = fullname;
@@ -102,7 +103,8 @@ function createStudentCard() {
     const student = {
         name: fullname,
         email: email,
-        phone: phone
+        phone: phone,
+        font: font
     }
 
     renderHistory(student);
@@ -114,8 +116,6 @@ function createStudentCard() {
  */
 function saveHistory(student) {
     // Spara history i localStorage
-
-
     history = JSON.parse(loadHistory());
 
     if (history === null) {
@@ -150,22 +150,28 @@ function renderHistory(student) {
 }
 
 function writeHistory() {
-    let students = JSON.parse(loadHistory());
+    historySection.innerHTML = "";
 
-    if (students.length > 0) {
-        for (let i = 0; i < students.length; i++) {
-            const sectionEl = document.createElement("section");
-            const pEl = document.createElement("p");
-            pEl.innerHTML = `Student: ${students[i].name}
-                <br>
-                E-post: ${students[i].email}
-                <br>
-                Telefon: ${students[i].phone}
-                `;
+    history = JSON.parse(loadHistory());
 
-            sectionEl.appendChild(pEl);
-            historySection.appendChild(sectionEl);
-        }
+    if (history === null) {
+        history = [];
+    }
+
+    for (let i = 0; i < history.length; i++) {
+        const sectionEl = document.createElement("section");
+        const pEl = document.createElement("p");
+        pEl.innerHTML = `Student: ${history[i].name}
+            <br>
+            E-post: ${history[i].email}
+            <br>
+            Telefon: ${history[i].phone}
+            <br>
+            Typsnitt: ${history[i].font}
+            `;
+
+        sectionEl.appendChild(pEl);
+        historySection.appendChild(sectionEl);
     }
 }
 
