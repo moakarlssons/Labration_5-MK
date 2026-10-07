@@ -116,14 +116,14 @@ function saveHistory(student) {
     // Spara history i localStorage
 
 
-    let students = JSON.parse(loadHistory());
+    history = JSON.parse(loadHistory());
 
-    if (students === null) {
-        students = [];
+    if (history === null) {
+        history = [];
     }
 
-    students.push(student);
-    const studentsJson = JSON.stringify(students);
+    history.push(student);
+    const studentsJson = JSON.stringify(history);
     localStorage.setItem("students", studentsJson);
 }
 
