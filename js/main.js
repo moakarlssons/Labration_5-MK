@@ -62,8 +62,6 @@ function validateForm() {
         validate = false;
     }
 
-    displayErrors();
-
     // Returnera resultatet (true eller false) av valideringen
     return validate;
 }
@@ -100,16 +98,28 @@ function createStudentCard() {
     previewPhone.innerHTML = phone;
 
     // Lägg till studentkortet i historiken
-
     // Spara och uppdatera historiken
+    const student = {
+        name: fullname,
+        email: email,
+        phone: phone
+    }
+
+    saveHistory(student);
 }
 
 
 /**
  * Sparar historiken i localStorage.
  */
-function saveHistory() {
+function saveHistory(student) {
     // Spara history i localStorage
+    const students = [];
+    students.push(student);
+
+    const studentsJson = JSON.stringify(students);
+
+    localStorage.setItem("students", studentsJson)
 }
 
 
@@ -161,7 +171,10 @@ form.addEventListener("submit", function (event) {
     // - validera inmatningen
     let valid = validateForm();
     // - skapa studentkort om valideringen lyckas
-    if (valid) {
+    if (!valid) {
+        displayErrors();
+    }
+    else {
         createStudentCard();
     }
 });
