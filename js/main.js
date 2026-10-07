@@ -42,6 +42,7 @@ function validateForm() {
     errors = [];
     errorList.innerHTML = "";
 
+    // Validerar formuläret
     if (nameValue === "") {
         errors.push("Ange ditt namn");
         validate = false;
@@ -82,7 +83,6 @@ function displayErrors() {
     }
 }
 
-
 /**
  * Skapar ett studentkort och visar det på sidan.
  */
@@ -98,8 +98,7 @@ function createStudentCard() {
     previewEmail.innerHTML = email;
     previewPhone.innerHTML = phone;
 
-    // Lägg till studentkortet i historiken
-    // Spara och uppdatera historiken
+    // Skapar ett student objekt
     const student = {
         name: fullname,
         email: email,
@@ -115,13 +114,13 @@ function createStudentCard() {
  * Sparar historiken i localStorage.
  */
 function saveHistory(student) {
-    // Spara history i localStorage
+    // Hämta historik från localStorage
     history = JSON.parse(loadHistory());
 
     if (history === null) {
         history = [];
     }
-
+    // Lägg till student först i array och sparar till local storage
     history.unshift(student);
     const studentsJson = JSON.stringify(history);
     localStorage.setItem("students", studentsJson);
@@ -142,22 +141,22 @@ function loadHistory() {
  * Visar historiken på sidan.
  */
 function renderHistory(student) {
-    // Rensa tidigare visad historik
+    // Sparar student i historiken
     saveHistory(student);
 
-    // Skriv ut innehållet i history till DOM
+    // Skriv ut historiken till DOM
     writeHistory();
 }
 
 function writeHistory() {
     historySection.innerHTML = "";
-
+    // Hämta historiken från localStorage
     history = JSON.parse(loadHistory());
 
     if (history === null) {
         history = [];
     }
-
+    // Skapar studentkort utifrån historiken
     for (let i = 0; i < history.length; i++) {
         const sectionEl = document.createElement("section");
         const pEl = document.createElement("p");
@@ -169,7 +168,7 @@ function writeHistory() {
             <br>
             Typsnitt: ${history[i].font}
             `;
-
+        // Lägger till studentkorten i DOM
         sectionEl.appendChild(pEl);
         historySection.appendChild(sectionEl);
     }
@@ -179,6 +178,7 @@ function writeHistory() {
  * Rensar formulär, aktuellt studentkort och felmeddelanden.
  */
 function clearForm() {
+    // Nollställer fälten i formuläret
     fullnameInput.value = "";
     emailInput.value = "";
     phoneInput.value = "";
@@ -201,11 +201,12 @@ form.addEventListener("submit", function (event) {
     event.preventDefault();
     // - validera inmatningen
     let valid = validateForm();
-    // - skapa studentkort om valideringen lyckas
     if (!valid) {
+        // visar felmeddelande om valideringen misslyckas
         displayErrors();
     }
     else {
+        // - skapa studentkort om valideringen lyckas
         createStudentCard();
         clearForm();
     }
@@ -227,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("font").addEventListener("change", changeFont);
     writeHistory();
 });
-
+// funktion för att byta typsnitt i studentkortet
 function changeFont() {
     const font = document.getElementById("font").value;
     document.querySelector("#preview").style.fontFamily = font;
