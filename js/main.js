@@ -183,6 +183,9 @@ function clearForm() {
     emailInput.value = "";
     phoneInput.value = "";
     fontSelect.selectedIndex = 0;
+
+    errors = [];
+    errorList.innerHTML = "";
 }
 
 /**
